@@ -1,0 +1,122 @@
+html {
+	width: 100%;
+	height: 100%;
+	background: #86858585;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
+}
+
+.curr {
+	padding: 30px 30px !important;
+}
+
+.curr ul {
+	list-style-type: none;
+	padding: 0;
+}
+.curr li {
+	margin: 5px;
+	font-size: 16px;
+}
+
+main {
+	padding: 10px;
+}
+
+.uk-navbar-container {
+	margin-bottom: 0;
+}
+
+footer {
+	background: rgb(60, 60, 156);
+}
+
+.uk-card-badge {
+	cursor: pointer;
+}
+
+.fixed {
+	position: fixed;
+}
+
+.menu {
+	border-top: 1px solid #e5e5e5;
+	border-bottom: 1px solid #e5e5e5;
+	height: 50px;
+}
+
+.my-button-white {
+	background-color: white;
+	color: black;
+	border: 1px solid transparent;
+}
+
+.my-button-white:hover {
+	background-color: rgb(231, 227, 227);
+}
+
+.my-avatar {
+	padding: 5px;
+}
+
+.my-username {
+	color: #f0506e !important;
+	text-align: center;
+}
+
+.my-profile {
+	margin-left: 0;
+}
+
+.my-profile .uk-width-expand p {
+	font-size: 16px;
+}
+
+.uk-form-success {
+	color: #32d296 !important;
+	border-color: #32d296 !important;
+}
+
+.uk-form-danger {
+	color: #f0506e !important;
+	border-color: #f0506e !important;
+}
+
+.my-logo {
+	height: 50px;
+	width: 150px;
+}
+
+.my-post-img {
+	padding: 0 20px 20px 0;
+}
+
+.my-post-view img {
+	max-height: 300px !important;
+}
+
+.uk-comment-list > :nth-child(n + 2) {
+	margin-top: 20px;
+}
+
+.unselectable {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+textarea {
+	resize: vertical;
+}
+
+
+
+

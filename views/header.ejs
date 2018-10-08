@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="google-site-verification" content="yzaOLnG1JllxapaVZdielaR_r7WeKHvEy0VwOf5qgx4" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Balabol</title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+
+	<!-- Socket.io -->
+	<script src="/plugins/socket.io/socket.io.js"></script>
+
+	<!-- Jquery -->
+	<script src="/plugins/jquery/jquery-3.3.1.min.js"></script>
+	<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+	<!-- UIkit -->
+	<link rel="stylesheet" href="/plugins/uikit/uikit.min.css" />
+	<script src="/plugins/uikit/uikit.min.js"></script>
+	<script src="/plugins/uikit/uikit-icons.min.js"></script>
+
+	<!-- Мои Стили -->
+	<link rel="stylesheet" href="/stylesheets/style.css">
+
+	<!-- Javascript -->
+	<script src="/javascripts/js-global.js"></script>
+
+</head>
+
+<body>
+	<div class="uk-offcanvas-content">
+
+		<!-- Menu -->
+		<header>
+			<nav class="uk-background-secondary" uk-navbar>
+				<div class="uk-navbar-left">
+					<a href="/"><img src="/images/logo.png" class="uk-navbar-item uk-logo my-logo" href="/"></a>
+				</div>
+				<div class="uk-navbar-right">
+					<div class="uk-navbar-item uk-visible@m">
+						<form action="javascript:void(0)">
+							<% if (user) { %>
+							<div class="my-avatar uk-grid-medium uk-flex-middle" uk-grid>
+								<div class="uk-width-auto">
+									<img class="uk-border-circle" width="50" height="50" src="<%= user.avatar %>">
+								</div>
+								<div class="uk-width-expand">
+									<h4 class="my-username uk-comment-title uk-margin-remove">
+										<%= user.username %>
+									</h4>
+									<ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+										<li>
+											<a href="#">Аккаунт</a>
+											<div id="DropMenu" uk-dropdown="pos: bottom-justify">
+												<ul class="uk-nav uk-dropdown-nav">
+													<li><a href="/profile">Профиль</a></li>
+													<li><a href="/posts/create">Создать пост</a></li>
+												</ul>
+											</div>
+										</li>
+										<li><a href="/auth/logout">Выйти</a></li>
+									</ul>
+								</div>
+							</div>
+							<% } else {  %>
+							<button uk-toggle="target: #login" type="button" class="uk-button my-button-white">Войти</button>
+							<button uk-toggle="target: #register" type="button" class="uk-button uk-button-danger">Регистрация</button>
+							<% } %>
+						</form>
+					</div>
+					<a uk-navbar-toggle-icon="" href="#offcanvas-push" uk-toggle="" class="uk-navbar-toggle uk-hidden@m uk-navbar-toggle-icon uk-icon"></a>
+				</div>
+			</nav>
+			<nav uk-sticky="media: 960" class="menu uk-navbar-container uk-visible@m" uk-navbar>
+				<div id="Menu" class="uk-navbar-left">
+					<ul class="uk-navbar-nav">
+						<li><a href="/">Статьи</a></li>
+						<li><a href="/about"> О сайте</a></li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+
+		<!-- Mobile menu -->
+		<div id="offcanvas-push" uk-offcanvas="mode: push; overlay: true">
+			<div id="MobileMenu" class="uk-offcanvas-bar">
+				<button class="uk-offcanvas-close" type="button" uk-close></button>
+				<% if (user) { %>
+				<div class="my-avatar uk-grid-medium uk-flex-middle" uk-grid>
+					<div class="uk-width-auto">
+						<img class="uk-border-circle" width="60" height="60" src="<%= user.avatar %>">
+					</div>
+					<div class="uk-width-expand">
+						<h4 class="my-username uk-comment-title uk-margin-remove">
+							<%= user.username %>
+						</h4>
+					</div>
+				</div>
+				<% } %>
+				<h3>Menu</h3>
+				<ul class="uk-nav uk-nav-default">
+					<li class="uk-nav-divider"></li>
+					<li><a href="/">Статьи</a></li>
+					<li><a href="/about">О сайте</a></li>
+
+					<% if (!user) { %>
+					<li class="uk-nav-divider"></li>
+					<li><a uk-toggle="target: #login" href="/login">Войти</a></li>
+					<li><a uk-toggle="target: #register" href="/register">Регистрация</a></li>
+					<% } %>
+				</ul>
+				<%	if (user) { %>
+				<h3>Account</h3>
+				<ul class="uk-nav uk-nav-default">
+					<li class="uk-nav-divider"></li>
+					<li><a href="/profile">Профиль</a></li>
+					<li><a href="/posts/create">Создать пост</a></li>
+					<li><a href="/auth/logout">Выйти</a></li>
+				</ul>
+				<%	}	%>
+			</div>
+		</div>
+
+		<!-- Modals -->
+		<div id="login" uk-modal>
+			<div class="uk-modal-dialog uk-modal-body">
+				<form id="logForm">
+					<fieldset class="uk-fieldset">
+						<legend class="uk-modal-title">Войти</legend>
+						<div class="uk-margin">
+							<input required class="name uk-input" type="text" placeholder="Введите свое имя" name="username">
+						</div>
+						<div class="uk-margin">
+							<input required class="pass uk-input" type="password" placeholder="Пароль" name="password">
+						</div>
+						<div class="uk-margin">
+							<ul class="uk-iconnav">
+								<li><a href="/auth/google" uk-icon="icon: google-plus; ratio: 1.5"></a></li>
+								<li><a href="/auth/facebook" uk-icon="icon: facebook; ratio: 1.5"></a></li>
+								<li><a href="#" uk-icon="icon: twitter; ratio: 1.5"></a></li>
+							</ul>
+						</div>
+						<p class="uk-text-right">
+							<button class="uk-button uk-button-primary" type="submit">Войти</button>
+							<button class="uk-button uk-button-default uk-modal-close" type="button">Отмена</button>
+						</p>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+
+		<div id="register" uk-modal>
+			<div class="uk-modal-dialog uk-modal-body">
+				<form id="regForm">
+					<fieldset class="uk-fieldset">
+						<legend class="uk-legend">Создать аккаунт</legend>
+						<div class="uk-margin">
+							<input required class="name uk-input" type="text" placeholder="Введите свое имя" name="username">
+						</div>
+						<div class="uk-margin">
+							<input required class="pass uk-input" type="password" placeholder="Пароль" name="password">
+						</div>
+						<div class="uk-margin">
+							<input required class="email uk-input" type="text" placeholder="Почта" name="email">
+						</div>
+						<div class="uk-margin">
+							<label><input class="uk-checkbox" type="checkbox" checked name="subscribe"> Подписаться на рассылку</label>
+						</div>
+						<p class="uk-text-right">
+							<button class="uk-button uk-button-primary" type="submit">Регистрация</button>
+							<button class="uk-button uk-button-default uk-modal-close" type="button">Отмена</button>
+						</p>
+					</fieldset>
+				</form>
+			</div>
+		</div>
