@@ -1,0 +1,51 @@
+<%- include header %>
+
+<main>
+	<script>
+		var userId = <%- JSON.stringify(user._id) %>;
+	</script>
+
+	<div class="my-profile" uk-grid>
+		<div class="uk-card uk-card-default uk-card-body uk-width-expand">
+			<form id="createPostForm">
+					<legend class="uk-legend">Создать новый пост</legend>
+
+					<div class="uk-margin">
+						<input id="Title" required class="uk-input" type="text" placeholder="Название" name="title">
+					</div>
+
+					<div class="uk-margin">
+						<select class="uk-select">
+							<option>Статьи</option>
+							<option>Категория 2</option>
+						</select>
+					</div>
+					<div class="my-mde">
+						<textarea id="Article" style="visibility: hidden" placeholder="Содержание" name="article"></textarea>
+					</div>
+
+					<div class="uk-margin" uk-margin>
+						<div uk-form-custom="target: true">
+							<input id="PostImage" type="file" name="image">
+							<input id="ImageInput" class="uk-input uk-form-width-medium" type="text" placeholder="Выберите изображение..."
+							 disabled>
+							<span style="color: #f0506e" id="ImageWarn"></span>
+						</div>
+						<progress style="width: 200px" id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
+					</div>
+
+					<div class="uk-margin">
+						<button id="SubmitBtn" class="uk-button uk-button-danger" type="submit">Опубликовать</button>
+					</div>
+			</form>
+		</div>
+
+		<%- include sider %>
+
+</main>
+
+<link rel="stylesheet" href="/plugins/simplemde/simplemde.min.css">
+<script src="/plugins/simplemde/simplemde.min.js"></script>
+<script src="/javascripts/js-create-post.js"></script>
+
+<%- include footer %>

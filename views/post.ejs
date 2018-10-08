@@ -1,0 +1,101 @@
+<%- include header %>
+
+<main>
+	<script>
+		/** init */
+		var postId = <%- JSON.stringify(post._id) %>;
+		var user = <%- JSON.stringify(user) %>;
+		var commentsLen = <%- post.comments.length %>;
+		var exacCommentsLen = commentsLen;
+		if (commentsLen >= 5) {
+			commentsLen = 5;
+		}
+	</script>
+
+	<div uk-grid>
+		<div class="my-post-view my-profile uk-width-expand">
+
+			<div class="uk-card uk-card-default uk-card-body uk-width-expand">
+				<div class="uk-width-expand">
+					<h3 class="uk-card-title uk-margin-remove-bottom">
+						<%= post.title %>
+					</h3>
+					<p class="uk-text-meta uk-margin-remove-top">Создан: <time datetime="<%= post.createdAt %>">
+							<%= post.createdStr %></time> , <span>Автор:
+							<%= post.author.username %></span>
+					</p>
+				</div>
+				<div align="center"><img class="my-post-img" src="/images/uploads/<%= post.image %>"></div>
+				<p>
+					<%- post.article %>
+				</p>
+				<a id="sendComment"></a>
+			</div>
+
+			<% if (user) { %>
+			<div class="uk-card uk-card-default uk-card-body uk-width-expand uk-margin">
+				<form id="SendCommentForm">
+					<fieldset class="uk-fieldset">
+						<div class="uk-margin">
+							<textarea id="Comment" required class="uk-textarea" rows="8" placeholder="Напишите ваш комментарий тут" name="comment"></textarea>
+						</div>
+						<button id="SubmitBtn" class="uk-button uk-button-danger uk-align-right uk-margin-remove" type="submit">Отправить</button>
+					</fieldset>
+				</form>
+			</div>
+
+			<div class="uk-card uk-card-default uk-card-body uk-width-expand">
+				<h3 class="uk-card-title uk-margin-remove-bottom">Комментарии: </h3>
+				<ul class="uk-comment-list">
+					<% if (post.comments.length > 0) { %>
+					<% post.comments.reverse().splice(0, 5).forEach(function(comment, index){ %>
+					<li>
+						<a id="comment<%= index %>"></a>
+						<article class="uk-comment uk-comment-primary uk-visible-toggle uk-margin-remove">
+							<header class="uk-comment-header uk-position-relative">
+								<div class="uk-grid-medium uk-flex-middle" uk-grid>
+									<div class="uk-width-auto">
+										<img class="uk-comment-avatar" src="<%= comment.author.avatar %>" width="80" height="80" alt="">
+									</div>
+									<div class="uk-width-expand">
+										<h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset" target="_blank" href="/users/<%= comment.author._id %>">
+												<%= comment.author.username %></a></h4>
+										<p class="uk-comment-meta uk-margin-remove-top">
+											<%= comment.createdFrom %>
+										</p>
+									</div>
+								</div>
+								<div class="uk-position-top-right uk-position-small uk-hidden-hover"><a class="uk-link-muted" href="#sendComment">Ответить</a></div>
+							</header>
+							<div class="uk-comment-body">
+								<p>
+									<%= comment.text %>
+								</p>
+							</div>
+						</article>
+					</li>
+					<% }); %>
+
+					<% } else { %>
+					<h3 align="center" id="NotComments" class="uk-card-title uk-margin-remove-bottom">Пусто</h3>
+					<% } %>
+				</ul>
+			</div>
+			<% } else { %>
+			<div align="center" class="uk-card uk-card-default uk-card-body uk-width-expand uk-margin">
+				<h3 class="uk-card-title uk-margin-remove-bottom"><a uk-toggle="target: #register" href="">Зарегистрируйтесь</a>
+					или <a uk-toggle="target: #login" href="">войдите</a>, чтобы оставлять комментарии</h3>
+			</div>
+			<% } %>
+
+		</div>
+
+		<%- include sider %>
+
+	</div>
+</main>
+<script src="/plugins/moment/moment.js"></script>
+<script src="/plugins/moment/locales/ru.js"></script>
+<script src="/javascripts/js-post-view.js"></script>
+
+<%- include footer %>
